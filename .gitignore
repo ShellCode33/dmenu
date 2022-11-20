@@ -1,0 +1,8 @@
+compile_commands.json
+.cache/*
+*.o
+dmenu
+stest
+*.orig
+*.rej
+*.diff
