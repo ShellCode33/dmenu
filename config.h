@@ -7,7 +7,7 @@ static int topbar = 1;                      /* -b  option; if 0, dmenu appears a
 static char font[] = "monospace:size=10";
 static const char *fonts[] = {
 	font,
-	"monospace:size=10",
+	"Noto Color Emoji:pixelsize=15:antialias=true:autohint=true",
 };
 
 static char *prompt      = NULL;      /* -p  option; prompt to the left of input field */
@@ -35,10 +35,10 @@ static const char worddelimiters[] = " ";
  * Xresources preferences to load at startup
  */
 ResourcePref resources[] = {
-	{ "font",        STRING, &font },
-	{ "normfgcolor", STRING, &normfgcolor },
-	{ "normbgcolor", STRING, &normbgcolor },
-	{ "selfgcolor",  STRING, &selfgcolor },
-	{ "selbgcolor",  STRING, &selbgcolor },
-	{ "prompt",      STRING, &prompt },
+	{ "font",       STRING, &font },
+	{ "color7",     STRING, &normfgcolor },
+	{ "background", STRING, &normbgcolor },
+	{ "color15",    STRING, &selfgcolor },
+	{ "color1",     STRING, &selbgcolor },
+	{ "prompt",     STRING, &prompt },
 };
