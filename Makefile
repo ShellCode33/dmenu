@@ -6,8 +6,10 @@ include config.mk
 SRC = drw.c dmenu.c stest.c util.c
 OBJ = $(SRC:.c=.o)
 
+.PHONY: all
 all: options dmenu stest
 
+.PHONY: options
 options:
 	@echo dmenu build options:
 	@echo "CFLAGS   = $(CFLAGS)"
@@ -17,9 +19,6 @@ options:
 .c.o:
 	$(CC) -c $(CFLAGS) $<
 
-config.h:
-	cp config.def.h $@
-
 $(OBJ): arg.h config.h config.mk drw.h
 
 dmenu: dmenu.o drw.o util.o
@@ -28,18 +27,11 @@ dmenu: dmenu.o drw.o util.o
 stest: stest.o
 	$(CC) -o $@ stest.o $(LDFLAGS)
 
+.PHONY: clean
 clean:
-	rm -f dmenu stest $(OBJ) dmenu-$(VERSION).tar.gz
+	rm -f dmenu stest $(OBJ)
 
-dist: clean
-	mkdir -p dmenu-$(VERSION)
-	cp LICENSE Makefile README arg.h config.def.h config.mk dmenu.1\
-		drw.h util.h dmenu_path dmenu_run stest.1 $(SRC)\
-		dmenu-$(VERSION)
-	tar -cf dmenu-$(VERSION).tar dmenu-$(VERSION)
-	gzip dmenu-$(VERSION).tar
-	rm -rf dmenu-$(VERSION)
-
+.PHONY: install
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp -f dmenu dmenu_path dmenu_run stest $(DESTDIR)$(PREFIX)/bin
@@ -53,6 +45,7 @@ install: all
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/dmenu.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/stest.1
 
+.PHONY: uninstall
 uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/dmenu\
 		$(DESTDIR)$(PREFIX)/bin/dmenu_path\
@@ -60,5 +53,3 @@ uninstall:
 		$(DESTDIR)$(PREFIX)/bin/stest\
 		$(DESTDIR)$(MANPREFIX)/man1/dmenu.1\
 		$(DESTDIR)$(MANPREFIX)/man1/stest.1
-
-.PHONY: all options clean dist install uninstall
